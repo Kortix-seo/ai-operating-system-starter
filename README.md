@@ -1,6 +1,6 @@
 # ai-operating-system-starter
 
-Kortix is open source, and this starter is that idea at its smallest: a small company called acme-co, configured as an AI Operating System. Four agent files, one manifest, one trigger, and an empty memory directory hold the whole thing. Read every file in about ten minutes and you will know where the work gets done and who signs off before it reaches `main`.
+Kortix is open source, and this starter is that idea at its smallest: a small company called acme-co, configured as a CompanyOS. Four agent files, one manifest, one trigger, and an empty memory directory hold the whole thing. Read every file in about ten minutes and you will know where the work gets done and who signs off before it reaches `main`.
 
 The loop it runs is easy to describe and strict about review: a trigger or a person starts a session, an agent works in its own sandbox, and anything it wants to keep arrives as a change request a person merges. Nothing an agent does skips that last step.
 
