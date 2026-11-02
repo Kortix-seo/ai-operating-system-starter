@@ -1,18 +1,18 @@
-# yaml-language-server: $schema=https://kortix.com/schema/kortix.v2.schema.json
+# yaml-language-server: $schema=https://kortix.com/schema/kortix.schema.json
 #
 # An example company (acme-co) run as an AI operating system.
 #
 # The governance rule this manifest is built on:
 # The project REGISTERS what exists (skills, tools, commands, extensions,
-# connectors, secrets). Each AGENT decides: its prompt, model and permission,
-# and which registered things it enables, by name. Nothing applies to every
-# agent by itself, and an agent sees only what it enables.
+# connectors, secrets). Each AGENT decides its prompt, model and permission,
+# and which registered things it enables, by name. Skills, commands,
+# extensions, connectors and secrets are default-deny: an agent reaches only
+# what it names. Tools and subagents are the exception — an agent gets every
+# tool and may start every agent unless the manifest narrows them.
 #
 # Adapted from the Kortix starter manifest, which is the authority for the
 # schema:
 # https://github.com/kortix-ai/suna/blob/dev/packages/starter/templates/base/kortix.yaml
-
-kortix_version: 2
 
 default_agent: kortix
 
@@ -26,16 +26,32 @@ env:
 
 agents:
   kortix:
-    file: agents/kortix.md
+    prompt_file: agents/kortix.md
+    tools: all
+    subagents: all
+    workspace:
+      project_repository: true
   ops-reporter:
-    file: agents/ops-reporter.md
+    prompt_file: agents/ops-reporter.md
+    tools: all
+    subagents: all
     connectors: []
+    workspace:
+      project_repository: true
   support-triage:
-    file: agents/support-triage.md
+    prompt_file: agents/support-triage.md
+    tools: all
+    subagents: all
     connectors: []
+    workspace:
+      project_repository: true
   code-fixer:
-    file: agents/code-fixer.md
+    prompt_file: agents/code-fixer.md
+    tools: all
+    subagents: all
     connectors: []
+    workspace:
+      project_repository: true
 
 triggers:
   - slug: daily-ops-digest
