@@ -25,7 +25,6 @@ The loop it runs is easy to describe and strict about review: a trigger or a per
 Six files and one empty directory hold the whole company; `kortix.yaml` is the only configuration file among them. Adapted from the Kortix starter, it declares the project, the environment names it may need, the four agents, and one trigger:
 
 ```yaml
-kortix_version: 2
 default_agent: kortix
 
 project:
@@ -38,16 +37,32 @@ env:
 
 agents:
   kortix:
-    file: agents/kortix.md
+    prompt_file: agents/kortix.md
+    tools: all
+    subagents: all
+    workspace:
+      project_repository: true
   ops-reporter:
-    file: agents/ops-reporter.md
+    prompt_file: agents/ops-reporter.md
+    tools: all
+    subagents: all
     connectors: []
+    workspace:
+      project_repository: true
   support-triage:
-    file: agents/support-triage.md
+    prompt_file: agents/support-triage.md
+    tools: all
+    subagents: all
     connectors: []
+    workspace:
+      project_repository: true
   code-fixer:
-    file: agents/code-fixer.md
+    prompt_file: agents/code-fixer.md
+    tools: all
+    subagents: all
     connectors: []
+    workspace:
+      project_repository: true
 
 triggers:
   - slug: daily-ops-digest
@@ -58,7 +73,7 @@ triggers:
 
 The comment at the top of the file carries the governance rule, adapted from the starter manifest. It explains why the three specialists grant no connectors:
 
-> The project REGISTERS what exists (skills, tools, commands, extensions, connectors, secrets). Each AGENT decides: its prompt, model and permission, and which registered things it enables, by name. Nothing applies to every agent by itself, and an agent sees only what it enables.
+> The project REGISTERS what exists (skills, tools, commands, extensions, connectors, secrets). Each AGENT decides its prompt, model and permission, and which registered things it enables, by name. Skills, commands, extensions, connectors and secrets are default-deny: an agent reaches only what it names. Tools and subagents are the exception — an agent gets every tool and may start every agent unless the manifest narrows them.
 
 Read it against the YAML and it stops being abstract. The three specialists are granted no connectors, so none of them can reach an outside app until you grant one. The trigger names no agent, so its sessions boot `default_agent`, and the cron fires at 09:00, Monday through Friday.
 
